@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import { Zap, Truck, RefreshCw, Lock } from "lucide-react";
 
 export const FeaturesSection: React.FC = () => {

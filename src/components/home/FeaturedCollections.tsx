@@ -1,52 +1,55 @@
-import { useState, useEffect } from "react";
-import { fetchCategories, fetchProductsByCategory, type Product } from "../../services/productService";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import {
+  fetchCategories,
+  fetchProductsByCategory,
+  type Product,
+} from "../../services/productService";
+
 import { ProductGrid } from "../common/ProductGrid";
-// import { formatCategoryName } from "../../utils/formatters";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const FeaturedCollections: React.FC = () => {
-  const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [scrollPosition, setScrollPosition] = useState(0);
-  console.log("Selected Category:", scrollPosition, selectedCategory);
+  console.log("Selected Category:", scrollPosition);
+  // Fetch Categories
+  const {
+    data: categories = [],
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
+
+  // Set default category after categories load
   useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const data = await fetchCategories();
-        setCategories(data.slice(0, 6)); // Show first 6 categories
-        setSelectedCategory(data[0].name);
-      } catch (error) {
-        console.error("Error loading categories:", error);
-      }
-    };
+    if (categories.length > 0 && !selectedCategory) {
+      setSelectedCategory(categories[0].name);
+    }
+  }, [categories, selectedCategory]);
 
-    loadCategories();
-  }, []);
+  // Fetch Products by Category
+  const {
+    data: productsData,
+    isLoading: productsLoading,
+    error: productsError,
+  } = useQuery({
+    queryKey: ["category-products", selectedCategory],
+    queryFn: () =>
+      fetchProductsByCategory(selectedCategory as string, 8, 0),
+    enabled: !!selectedCategory,
+  });
 
-  useEffect(() => {
-    if (!selectedCategory) return;
-
-    const loadCategoryProducts = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchProductsByCategory(selectedCategory, 8, 0);
-        setProducts(data.products);
-      } catch (error) {
-        console.error("Error loading category products:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadCategoryProducts();
-  }, [selectedCategory]);
+  const products: Product[] = productsData?.products || [];
 
   const scroll = (direction: "left" | "right") => {
     const container = document.getElementById("category-scroll");
+
     if (container) {
       const scrollAmount = 200;
+
       if (direction === "left") {
         container.scrollLeft -= scrollAmount;
         setScrollPosition(container.scrollLeft - scrollAmount);
@@ -57,6 +60,14 @@ export const FeaturedCollections: React.FC = () => {
     }
   };
 
+  if (categoriesError || productsError) {
+    return (
+      <section className="py-16 text-center text-red-500">
+        Failed to load featured collections.
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,6 +75,7 @@ export const FeaturedCollections: React.FC = () => {
           <p className="text-sm uppercase tracking-widest text-gray-600 mb-3">
             Collections
           </p>
+
           <h2 className="section-title">Featured Collections</h2>
         </div>
 
@@ -81,19 +93,20 @@ export const FeaturedCollections: React.FC = () => {
             className="flex gap-3 overflow-x-auto pb-4 scroll-smooth px-10"
             style={{ scrollBehavior: "smooth" }}
           >
-            {categories.map((category) => (
-              <button
-                key={category.name}
-                onClick={() => setSelectedCategory(category.name)}
-                className={`px-6 py-3 rounded-full whitespace-nowrap font-semibold transition-all ${
-                  selectedCategory === category.name
-                    ? "bg-black text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
+            {!categoriesLoading &&
+              categories.map((category) => (
+                <button
+                  key={category.name}
+                  onClick={() => setSelectedCategory(category.name)}
+                  className={`px-6 py-3 rounded-full whitespace-nowrap font-semibold transition-all ${
+                    selectedCategory === category.name
+                      ? "bg-black text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  }`}
+                >
+                  {category.name}
+                </button>
+              ))}
           </div>
 
           <button
@@ -105,7 +118,11 @@ export const FeaturedCollections: React.FC = () => {
         </div>
 
         {/* Products Grid */}
-        <ProductGrid products={products} isLoading={isLoading} columns={4} />
+        <ProductGrid
+          products={products}
+          isLoading={productsLoading}
+          columns={4}
+        />
       </div>
     </section>
   );
