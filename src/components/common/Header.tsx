@@ -44,12 +44,6 @@ export const Header: React.FC = () => {
               Shop
             </Link>
             <Link
-              to="/sale"
-              className="text-gray-700 hover:text-black transition-colors font-medium"
-            >
-              Sale
-            </Link>
-            <Link
               to="/about"
               className="text-gray-700 hover:text-black transition-colors font-medium"
             >
@@ -139,13 +133,7 @@ export const Header: React.FC = () => {
             >
               Shop
             </Link>
-            <Link
-              to="/sale"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Sale
-            </Link>
+  
             <Link
               to="/about"
               className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"

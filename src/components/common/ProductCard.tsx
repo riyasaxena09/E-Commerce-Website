@@ -4,6 +4,7 @@ import { formatPrice, calculateDiscount, formatRating } from "../../utils/format
 import { useCart } from "../../store/CartContext";
 import { useWishlist } from "../../store/WishlistContext";
 import type { Product } from "../../services/productService";
+import { AuthModal } from "../auth/Authenticate";
 
 interface ProductCardProps {
   product: Product;
@@ -11,6 +12,7 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
@@ -18,6 +20,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const inWishlist = isInWishlist(product.id);
 
   const handleAddToCart = () => {
+    setIsAuthModalOpen(true);
     addToCart({
       id: product.id,
       title: product.title,
@@ -134,6 +137,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
         </div>
       </div>
+
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </div>
   );
 };
