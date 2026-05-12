@@ -20,7 +20,13 @@ export const FeaturedCollections: React.FC = () => {
     error: categoriesError,
   } = useQuery({
     queryKey: ["categories"],
-    queryFn: fetchCategories,
+    queryFn: async () => {
+      const categoryNames = await fetchCategories();
+      return categoryNames.map((name: string) => ({
+        slug: name.toLowerCase().replace(/\s+/g, '-'),
+        name: name,
+      }));
+    },
   });
 
   // Set default category after categories load

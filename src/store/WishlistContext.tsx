@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 
 export interface WishlistItem {
   id: number;
@@ -20,20 +21,33 @@ const WishlistContext = createContext<WishlistContextType | undefined>(
   undefined
 );
 
-const WISHLIST_STORAGE_KEY = "ecommerce_wishlist";
+const GUEST_WISHLIST_KEY = "ecommerce_wishlist_guest";
+const getWishlistStorageKey = (user: { id: string } | null) =>
+  user ? `ecommerce_wishlist_${user.id}` : GUEST_WISHLIST_KEY;
 
 export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { user } = useAuth();
   const [items, setItems] = useState<WishlistItem[]>(() => {
-    const stored = localStorage.getItem(WISHLIST_STORAGE_KEY);
+    const stored = localStorage.getItem(getWishlistStorageKey(user));
     return stored ? JSON.parse(stored) : [];
   });
 
+  useEffect(() => {
+    const storageKey = getWishlistStorageKey(user);
+    if (user) {
+      const stored = localStorage.getItem(storageKey);
+      setItems(stored ? JSON.parse(stored) : []);
+    } else {
+      setItems([]);
+    }
+  }, [user]);
+
   // Persist wishlist to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+    localStorage.setItem(getWishlistStorageKey(user), JSON.stringify(items));
+  }, [items, user]);
 
   const addToWishlist = (item: WishlistItem) => {
     setItems((prevItems) => {

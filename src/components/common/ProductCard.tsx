@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Heart, ShoppingBag, Star } from "lucide-react";
 import { formatPrice, calculateDiscount, formatRating } from "../../utils/formatters";
 import { useCart } from "../../store/CartContext";
@@ -13,6 +14,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const navigate = useNavigate();
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { addToCart } = useCart();
@@ -22,7 +24,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const discountedPrice = calculateDiscount(product.price, product.discountPercentage);
   const inWishlist = isInWishlist(product.id);
 
-  const handleAddToCart = () => {
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Don't navigate if clicking on buttons
+    if ((e.target as HTMLElement).closest('.wishlist-btn, .card-action-btn')) {
+      return;
+    }
+    navigate(`/product/${product.id}`);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!isAuthenticated) {
       setIsAuthModalOpen(true);
       return;
@@ -36,7 +47,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     });
   };
 
-  const handleWishlistToggle = () => {
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!isAuthenticated) {
       setIsAuthModalOpen(true);
       return;
@@ -56,7 +68,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <>
-      <div className="card-container">
+      <div className="card-container" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
         {/* Image Container */}
         <div className="card-image-wrapper">
           <img

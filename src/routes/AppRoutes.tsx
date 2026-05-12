@@ -1,6 +1,7 @@
 
 import { HomePage } from "../pages/HomePage";
 import { ProductListingPage } from "../pages/ProductListingPage";
+import ProductDetailPage from "../pages/ProductDetailPage";
 import { CartPage } from "../pages/CartPage";
 import { WishlistPage } from "../pages/WishlistPage";
 import { MainLayout } from "../layouts/MainLayout";
@@ -13,6 +14,7 @@ export const AppRoutes: React.FC = () => {
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductListingPage />} />
+          <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/about" element={<HomePage />} />

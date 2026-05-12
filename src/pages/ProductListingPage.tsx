@@ -33,7 +33,14 @@ export const ProductListingPage: React.FC = () => {
   // Categories Query
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["categories"],
-    queryFn: fetchCategories,
+    queryFn: async () => {
+      const categoryNames = await fetchCategories();
+      return categoryNames.map((name: string) => ({
+        slug: name.toLowerCase().replace(/\s+/g, '-'),
+        name: name,
+      }));
+    },
+    staleTime: 10 * 60 * 1000, // 10 minutes
   });
 
   // Products Query
