@@ -10,13 +10,13 @@ export const FeaturedCollections: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [scrollPosition, setScrollPosition] = useState(0);
-  console.log("Selected Category:", scrollPosition);
+  console.log("Selected Category:", scrollPosition, selectedCategory);
   useEffect(() => {
     const loadCategories = async () => {
       try {
         const data = await fetchCategories();
         setCategories(data.slice(0, 6)); // Show first 6 categories
-        setSelectedCategory(data[0]);
+        setSelectedCategory(data[0].name);
       } catch (error) {
         console.error("Error loading categories:", error);
       }
@@ -83,15 +83,15 @@ export const FeaturedCollections: React.FC = () => {
           >
             {categories.map((category) => (
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
+                key={category.name}
+                onClick={() => setSelectedCategory(category.name)}
                 className={`px-6 py-3 rounded-full whitespace-nowrap font-semibold transition-all ${
-                  selectedCategory === category
+                  selectedCategory === category.name
                     ? "bg-black text-white"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               >
-                {/* {formatCategoryName(category)} */}
+                {category.name}
               </button>
             ))}
           </div>

@@ -30,9 +30,9 @@ export const HeroBanner: React.FC = () => {
                 Explore Collection
                 <ChevronRight className="w-5 h-5" />
               </Link>
-              <button className="btn-secondary border-white text-white hover:bg-white hover:text-black">
+              {/* <button className="btn-secondary border-white text-white hover:bg-white hover:text-black">
                 View Sale
-              </button>
+              </button> */}
             </div>
           </div>
 

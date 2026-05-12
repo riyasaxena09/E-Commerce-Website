@@ -127,16 +127,16 @@ export const ProductListingPage: React.FC = () => {
                     <button
                       key={category}
                       onClick={() => {
-                        setSelectedCategory(category);
+                        setSelectedCategory(category.name);
                         setCurrentPage(1);
                       }}
                       className={`block w-full text-left px-3 py-2 rounded transition-colors capitalize ${
-                        selectedCategory === category
+                        selectedCategory === category.name
                           ? "bg-black text-white"
                           : "text-gray-700 hover:bg-gray-100"
                       }`}
                     >
-                      {category}
+                      {category.name}
                     </button>
                   ))}
                 </div>

@@ -62,6 +62,7 @@ export const fetchProductsByCategory = async (
   limit: number = 30,
   skip: number = 0
 ): Promise<PaginatedResponse> => {
+  console.log("Fetching products for category:", category);
   try {
     const response = await fetch(
       `${API_BASE_URL}/products/category/${category}?limit=${limit}&skip=${skip}`
