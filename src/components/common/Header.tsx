@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Heart, ShoppingBag, Search, LogOut } from "lucide-react";
+import { Menu, X, Heart, ShoppingBag, LogOut } from "lucide-react";
 import { useCart } from "../../store/CartContext";
 import { useWishlist } from "../../store/WishlistContext";
 import { useAuth } from "../../store/AuthContext";
@@ -9,7 +9,6 @@ import "../../styles/Header.css";
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { getItemCount: getCartCount } = useCart();
   const { getItemCount: getWishlistCount } = useWishlist();
@@ -30,7 +29,6 @@ export const Header: React.FC = () => {
           <div className="header-content">
             {/* Logo */}
             <Link to="/" className="logo-link">
-              <div className="logo-box">E</div>
               <span className="logo-text">LuxeStyle</span>
             </Link>
 
@@ -49,14 +47,6 @@ export const Header: React.FC = () => {
 
             {/* Right Actions */}
             <div className="header-actions">
-              {/* Search Icon */}
-              <button
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="action-btn"
-                aria-label="Search"
-              >
-                <Search className="action-icon" />
-              </button>
 
               {/* Wishlist */}
               <Link to="/wishlist" className="action-link" aria-label="Wishlist">
@@ -113,17 +103,6 @@ export const Header: React.FC = () => {
               </button>
             </div>
           </div>
-
-          {/* Search Bar */}
-          {isSearchOpen && (
-            <div className="search-bar-wrapper open">
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="search-input"
-              />
-            </div>
-          )}
 
           {/* Mobile Navigation */}
           <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>

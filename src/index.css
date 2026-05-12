@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./styles/utilities.css";
 
 * {
   margin: 0;
@@ -43,7 +41,7 @@ body {
 }
 
 /* Animation utilities */
-@layer components {
+/* @layer components {
   .btn-primary {
     @apply px-8 py-3 bg-black text-white font-semibold rounded transition-all duration-300 hover:bg-gray-800 active:scale-95;
   }
@@ -83,7 +81,7 @@ body {
   .badge-new {
     @apply badge bg-green-500 text-white;
   }
-}
+} */
 
 /* Loading animation */
 @keyframes shimmer {

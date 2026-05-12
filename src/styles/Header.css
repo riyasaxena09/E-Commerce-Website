@@ -377,7 +377,63 @@
 }
 
 @media (max-width: 640px) {
+  .header {
+    padding: 0.5rem 0;
+  }
+
   .header-actions {
     gap: 0.5rem;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .nav-link {
+    font-size: 0.875rem;
+  }
+
+  .action-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .badge-counter {
+    font-size: 0.65rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .login-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+  }
+
+  .user-name {
+    font-size: 0.75rem;
+  }
+
+  .header-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    height: 3rem;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .header-actions {
+    gap: 0.25rem;
+  }
+
+  .mobile-menu-icon {
+    width: 1.125rem;
+    height: 1.125rem;
   }
 }

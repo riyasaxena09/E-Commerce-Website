@@ -27,7 +27,7 @@
 }
 
 .breadcrumb-link {
-  color: var(--color-blue);
+  color: var(--color-gray-700);
   background: none;
   border: none;
   cursor: pointer;
@@ -36,7 +36,7 @@
 }
 
 .breadcrumb-link:hover {
-  color: #1d4ed8;
+  color: var(--color-black);
 }
 
 .breadcrumb-separator {
