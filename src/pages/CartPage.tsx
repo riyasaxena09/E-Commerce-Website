@@ -110,13 +110,12 @@ export const CartPage: React.FC = () => {
                           item.quantity
                       )}
                     </p>
-                    <button
+                    <div
                       onClick={() => removeFromCart(item.id)}
                       className="text-red-600 hover:text-red-700 flex items-center gap-1"
                     >
                       <Trash2 className="w-4 h-4" />
-                      Remove
-                    </button>
+                    </div>
                   </div>
                 </div>
               ))}

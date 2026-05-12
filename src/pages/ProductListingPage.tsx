@@ -319,12 +319,12 @@ export const ProductListingPage: React.FC = () => {
                   Filters
                 </h3>
 
-                <button
+                <div
                   onClick={handleResetFilters}
                   className="text-sm text-blue-600 hover:text-blue-800"
                 >
                   Reset
-                </button>
+                </div>
               </div>
 
               {/* Categories */}

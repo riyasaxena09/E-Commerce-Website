@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
           <p className="text-gray-400 mb-4">
             Get exclusive offers and updates on new collections.
           </p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 subscribe-section">
             <input
               type="email"
               placeholder="Enter your email"

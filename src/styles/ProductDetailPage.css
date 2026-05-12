@@ -419,8 +419,4 @@
     flex-direction: column;
   }
 
-  .add-to-cart-btn,
-  .wishlist-btn {
-    width: 100%;
-  }
 }
