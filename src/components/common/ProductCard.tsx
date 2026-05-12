@@ -3,8 +3,10 @@ import { Heart, ShoppingBag, Star } from "lucide-react";
 import { formatPrice, calculateDiscount, formatRating } from "../../utils/formatters";
 import { useCart } from "../../store/CartContext";
 import { useWishlist } from "../../store/WishlistContext";
+import { useAuth } from "../../store/AuthContext";
 import type { Product } from "../../services/productService";
 import { AuthModal } from "../auth/Authenticate";
+import "../../styles/ProductCard.css";
 
 interface ProductCardProps {
   product: Product;
@@ -15,12 +17,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { isAuthenticated } = useAuth();
 
   const discountedPrice = calculateDiscount(product.price, product.discountPercentage);
   const inWishlist = isInWishlist(product.id);
 
   const handleAddToCart = () => {
-    setIsAuthModalOpen(true);
+    if (!isAuthenticated) {
+      setIsAuthModalOpen(true);
+      return;
+    }
     addToCart({
       id: product.id,
       title: product.title,
@@ -31,6 +37,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const handleWishlistToggle = () => {
+    if (!isAuthenticated) {
+      setIsAuthModalOpen(true);
+      return;
+    }
     if (inWishlist) {
       removeFromWishlist(product.id);
     } else {
@@ -45,100 +55,88 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden card-hover">
-      {/* Image Container */}
-      <div className="relative bg-gray-100 aspect-square overflow-hidden group">
-        <img
-          src={product.thumbnail}
-          alt={product.title}
-          className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 ${
-            isImageLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setIsImageLoaded(true)}
-        />
+    <>
+      <div className="card-container">
+        {/* Image Container */}
+        <div className="card-image-wrapper">
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className={`card-image ${isImageLoaded ? "loaded" : ""}`}
+            onLoad={() => setIsImageLoaded(true)}
+          />
 
-        {!isImageLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-200 shimmer" />
-        )}
+          {!isImageLoaded && <div className="card-image-skeleton" />}
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 space-y-2">
-          {product.discountPercentage > 0 && (
-            <div className="badge-sale">{Math.round(product.discountPercentage)}% OFF</div>
-          )}
-          {product.stock < 5 && product.stock > 0 && (
-            <div className="badge bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-              Only {product.stock} Left
-            </div>
-          )}
-          {product.stock === 0 && (
-            <div className="badge bg-gray-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-              Out of Stock
-            </div>
-          )}
+          {/* Badges */}
+          <div className="card-badges">
+            {product.discountPercentage > 0 && (
+              <div className="badge-sale">{Math.round(product.discountPercentage)}% OFF</div>
+            )}
+            {product.stock < 5 && product.stock > 0 && (
+              <div className="badge badge-stock">
+                Only {product.stock} Left
+              </div>
+            )}
+            {product.stock === 0 && (
+              <div className="badge badge-out">Out of Stock</div>
+            )}
+          </div>
+
+          {/* Wishlist Button */}
+          <button
+            onClick={handleWishlistToggle}
+            className="wishlist-btn"
+          >
+            <Heart
+              className={`wishlist-icon ${inWishlist ? "in-wishlist" : ""}`}
+            />
+          </button>
+
+          {/* Add to Cart Button */}
+          <button
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
+            className={`card-action-btn ${
+              product.stock === 0 ? "unavailable" : "available"
+            }`}
+          >
+            <ShoppingBag className="card-action-icon" />
+            {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+          </button>
         </div>
 
-        {/* Wishlist Button */}
-        <button
-          onClick={handleWishlistToggle}
-          className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all hover:scale-110"
-        >
-          <Heart
-            className={`w-5 h-5 transition-colors ${
-              inWishlist ? "fill-red-500 text-red-500" : "text-gray-600"
-            }`}
-          />
-        </button>
+        {/* Product Info */}
+        <div className="card-info">
+          <p className="card-category">{product.category}</p>
 
-        {/* Overlay Action */}
-        <button
-          onClick={handleAddToCart}
-          disabled={product.stock === 0}
-          className={`absolute bottom-0 left-0 right-0 py-3 font-semibold transition-all transform translate-y-full group-hover:translate-y-0 flex items-center justify-center gap-2 ${
-            product.stock === 0
-              ? "bg-gray-400 text-gray-600 cursor-not-allowed"
-              : "bg-black text-white hover:bg-gray-800"
-          }`}
-        >
-          <ShoppingBag className="w-5 h-5" />
-          {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-        </button>
-      </div>
+          <h3 className="card-title">{product.title}</h3>
 
-      {/* Product Info */}
-      <div className="p-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">
-          {product.category}
-        </p>
-
-        <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2 min-h-14">
-          {product.title}
-        </h3>
-
-        {/* Rating */}
-        <div className="flex items-center gap-2 mb-3">
-          <div className="flex items-center gap-1">
-            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-            <span className="text-sm font-medium text-gray-700">
+          {/* Rating */}
+          <div className="card-rating">
+            <div className="card-stars">
+              <Star className="star-icon" />
+            </div>
+            <span className="card-rating-value">
               {formatRating(product.rating)}
             </span>
           </div>
-        </div>
 
-        {/* Price */}
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-bold text-black">
-            {formatPrice(discountedPrice)}
-          </span>
-          {product.discountPercentage > 0 && (
-            <span className="text-sm text-gray-500 line-through">
-              {formatPrice(product.price)}
+          {/* Price */}
+          <div className="card-price-section">
+            <span className="card-price">
+              {formatPrice(discountedPrice)}
             </span>
-          )}
+            {product.discountPercentage > 0 && (
+              <span className="card-original-price">
+                {formatPrice(product.price)}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
       <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
-    </div>
+    </>
   );
 };

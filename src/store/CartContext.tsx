@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 
 export interface CartItem {
   id: number;
@@ -21,20 +22,33 @@ export interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = "ecommerce_cart";
+const GUEST_CART_KEY = "ecommerce_cart_guest";
+const getCartStorageKey = (user: { id: string } | null) =>
+  user ? `ecommerce_cart_${user.id}` : GUEST_CART_KEY;
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { user } = useAuth();
   const [items, setItems] = useState<CartItem[]>(() => {
-    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    const stored = localStorage.getItem(getCartStorageKey(user));
     return stored ? JSON.parse(stored) : [];
   });
 
+  useEffect(() => {
+    const storageKey = getCartStorageKey(user);
+    if (user) {
+      const stored = localStorage.getItem(storageKey);
+      setItems(stored ? JSON.parse(stored) : []);
+    } else {
+      setItems([]);
+    }
+  }, [user]);
+
   // Persist cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+    localStorage.setItem(getCartStorageKey(user), JSON.stringify(items));
+  }, [items, user]);
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setItems((prevItems) => {

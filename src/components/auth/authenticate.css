@@ -136,6 +136,47 @@
   color: #777;
 }
 
+/* Error Message */
+.modal-error {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  color: #c33;
+  font-size: 14px;
+  text-align: center;
+  animation: slideDown 0.3s ease;
+}
+
+/* Toggle Link */
+.modal-toggle {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 14px;
+  color: #666;
+}
+
+.modal-toggle-link {
+  background: none;
+  border: none;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.modal-toggle-link:hover {
+  color: #333;
+}
+
+/* Disabled Button State */
+.modal-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Animation */
 @keyframes modalOpen {
   from {
@@ -146,6 +187,18 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
