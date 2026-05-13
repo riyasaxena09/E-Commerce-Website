@@ -1,10 +1,11 @@
 // HeroBanner.tsx
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import "../../styles/HeroBanner.css";
 
  export const HeroBanner: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <section className="hero">
       {/* Background Effects */}
@@ -33,7 +34,7 @@ import "../../styles/HeroBanner.css";
               <ChevronRight size={20} />
             </Link>
 
-            <button className="hero-btn secondary-btn">
+            <button className="hero-btn secondary-btn" onClick={()=>navigate('/products')}>
               View Lookbook
             </button>
           </div>
