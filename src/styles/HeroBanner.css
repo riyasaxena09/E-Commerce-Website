@@ -1,0 +1,428 @@
+/* HERO SECTION */
+.hero {
+  position: relative;
+  min-height: 82vh; /* reduced height */
+  background: #050505;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 60px 0;
+}
+
+/* CONTAINER */
+.hero-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1250px;
+  margin: auto;
+  padding: 0 6%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+  align-items: center;
+}
+
+/* TITLE */
+.hero-title {
+  font-size: 4.2rem;
+  line-height: 1;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+
+/* DESCRIPTION */
+.hero-description {
+  color: #cfcfcf;
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+/* IMAGE */
+.image-card {
+  position: relative;
+  width: 100%;
+  max-width: 430px; /* smaller image container */
+  margin: auto;
+}
+
+.hero-image {
+  width: 100%;
+  height: 520px; /* reduced image height */
+  object-fit: cover;
+  border-radius: 28px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+}
+
+.hero-stats{
+    padding-top: 10px;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding: 90px 0 50px;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 35px;
+  }
+
+  .hero-title {
+    font-size: 3.4rem;
+  }
+
+  .hero-description {
+    margin: auto auto 32px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-stats {
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  .hero-image {
+    height: 440px;
+  }
+
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .hero {
+    padding: 80px 0 40px;
+  }
+
+  .hero-container {
+    padding: 0 20px;
+  }
+
+  .hero-title {
+    font-size: 2.6rem;
+  }
+
+  .hero-description {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .hero-image {
+    height: 340px;
+    border-radius: 22px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-btn {
+    width: 100%;
+  }
+
+  .hero-stats {
+    gap: 20px;
+  }
+
+  .hero-stats h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .hero-image {
+    height: 300px;
+  }
+
+}
+
+/* =========================
+   SMOOTH ANIMATIONS
+========================= */
+
+/* HERO CONTENT ENTRY */
+.hero-content {
+  animation: heroFadeUp 1s ease forwards;
+}
+
+.hero-image-section {
+  animation: heroImageZoom 1.2s ease forwards;
+}
+
+/* TITLE ANIMATION */
+.hero-title {
+  animation: textGlow 4s ease-in-out infinite alternate;
+}
+
+/* BUTTON HOVER EFFECT */
+.hero-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: skewX(-20deg);
+  transition: 0.7s;
+}
+
+.hero-btn:hover::before {
+  left: 130%;
+}
+
+/* IMAGE HOVER EFFECT */
+.image-card {
+  transition: transform 0.5s ease;
+}
+
+.image-card:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.hero-image {
+  transition: transform 0.6s ease;
+}
+
+.image-card:hover .hero-image {
+  transform: scale(1.04);
+}
+
+/* FLOATING CARD ANIMATION */
+.floating-card {
+  animation: floatingCard 4s ease-in-out infinite;
+}
+
+/* STATS ANIMATION */
+.hero-stats div {
+  animation: statFade 1s ease forwards;
+}
+
+.hero-stats div:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.hero-stats div:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.hero-stats div:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.hero-stats div:hover {
+  transform: translateY(-6px);
+  transition: 0.3s ease;
+}
+
+/* BACKGROUND MOVING EFFECT */
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(250, 204, 21, 0.12),
+    transparent 70%
+  );
+  top: -120px;
+  right: -120px;
+  animation: pulseMove 8s ease-in-out infinite;
+}
+
+/* =========================
+   KEYFRAMES
+========================= */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroImageZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes floatingCard {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulseMove {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-40px, 30px) scale(1.1);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes textGlow {
+  from {
+    text-shadow: 0 0 10px rgba(250, 204, 21, 0.15);
+  }
+
+  to {
+    text-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
+  }
+}
+
+@keyframes statFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   MOBILE PERFORMANCE
+========================= */
+
+@media (max-width: 600px) {
+  .hero::before {
+    width: 260px;
+    height: 260px;
+  }
+
+  .image-card:hover {
+    transform: none;
+  }
+
+  .image-card:hover .hero-image {
+    transform: none;
+  }
+}
+
+/* FLOATING CARD FIXED */
+.floating-card {
+  position: absolute;
+  bottom: 16px;
+  left: 16px; /* keep inside image */
+  right: 16px; /* prevents overflow */
+  width: auto;
+  max-width: 260px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  padding: 14px 18px;
+  border-radius: 18px;
+
+  animation: floatingCard 4s ease-in-out infinite;
+  z-index: 5;
+}
+
+.floating-card span {
+  color: #facc15;
+  font-size: 0.82rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.floating-card h4 {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+  .floating-card {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 280px;
+    text-align: center;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .floating-card {
+    width: calc(100% - 24px);
+    max-width: none;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    transform: none;
+
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .floating-card h4 {
+    font-size: 0.88rem;
+  }
+
+  .floating-card span {
+    font-size: 0.75rem;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 380px) {
+  .floating-card {
+    padding: 10px 12px;
+    bottom: 10px;
+  }
+
+  .floating-card h4 {
+    font-size: 0.8rem;
+  }
+}
