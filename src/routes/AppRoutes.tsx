@@ -6,6 +6,7 @@ import { CartPage } from "../pages/CartPage";
 import { WishlistPage } from "../pages/WishlistPage";
 import { MainLayout } from "../layouts/MainLayout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AboutPage from "../pages/AboutPage";
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
-          <Route path="/about" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
