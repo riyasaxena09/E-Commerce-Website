@@ -7,6 +7,7 @@ import {useAuth} from "../store/AuthContext";
 import {useCart} from "../store/CartContext";
 import '../styles/ProductDetailPage.css';
 import { AuthModal } from "../components/auth/Authenticate";
+import toast from "react-hot-toast";
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,6 +37,7 @@ const ProductDetailPage: React.FC = () => {
         image: product.thumbnail,
         discount: product.discountPercentage,
       });
+      toast.success(`${product.title} added to cart!`);
     }
   };
 

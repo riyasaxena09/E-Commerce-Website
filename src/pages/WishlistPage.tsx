@@ -3,6 +3,7 @@ import { Trash2, ShoppingBag, Heart } from "lucide-react";
 import { useWishlist } from "../store/WishlistContext";
 import { useCart } from "../store/CartContext";
 import { formatPrice, calculateDiscount } from "../utils/formatters";
+import toast from "react-hot-toast";
 
 export const WishlistPage: React.FC = () => {
   const { items, removeFromWishlist } = useWishlist();
@@ -17,6 +18,7 @@ export const WishlistPage: React.FC = () => {
       discount: item.discount,
     });
     removeFromWishlist(item.id);
+    toast.success(`${item.title} moved to cart!`);
   };
 
   if (items.length === 0) {

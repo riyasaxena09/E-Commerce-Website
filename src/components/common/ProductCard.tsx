@@ -7,6 +7,7 @@ import { useWishlist } from "../../store/WishlistContext";
 import { useAuth } from "../../store/AuthContext";
 import type { Product } from "../../services/productService";
 import { AuthModal } from "../auth/Authenticate";
+import toast from "react-hot-toast";
 import "../../styles/ProductCard.css";
 
 interface ProductCardProps {
@@ -45,6 +46,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       image: product.thumbnail,
       discount: product.discountPercentage,
     });
+    toast.success(`${product.title} added to cart!`);
   };
 
   const handleWishlistToggle = (e: React.MouseEvent) => {

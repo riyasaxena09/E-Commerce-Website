@@ -463,3 +463,8 @@
     width: 100%;
   }
 }
+
+/* Reset Link */
+.reset-link {
+  cursor: pointer;
+}
