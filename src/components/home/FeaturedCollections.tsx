@@ -86,7 +86,7 @@ export const FeaturedCollections: React.FC = () => {
         <div className="relative mb-12">
           <button
             onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-all"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>

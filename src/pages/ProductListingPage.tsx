@@ -178,7 +178,7 @@ export const ProductListingPage: React.FC = () => {
                   Category
                 </h4>
 
-                <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                <div className="space-y-2 max-h-[300px] overflow-y-auto cursor-pointer">
                   <button
                     onClick={() => {
                       setSelectedCategory("");
@@ -206,7 +206,7 @@ export const ProductListingPage: React.FC = () => {
 
                         setShowMobileFilters(false);
                       }}
-                      className={`block w-full text-left px-3 py-2 rounded ${
+                      className={`block w-full text-left px-3 py-2 rounded cursor-pointer ${
                         selectedCategory ===
                         category.slug
                           ? "bg-black text-white"
@@ -221,7 +221,7 @@ export const ProductListingPage: React.FC = () => {
 
               {/* Price */}
               <div className="mb-8">
-                <h4 className="font-semibold mb-4">
+                <h4 className="font-semibold mb-4 ">
                   Price Range
                 </h4>
 
@@ -237,7 +237,7 @@ export const ProductListingPage: React.FC = () => {
                         priceRange[1],
                       ])
                     }
-                    className="w-full"
+                    className="w-full cursor-pointer"
                   />
 
                   <input
@@ -251,7 +251,7 @@ export const ProductListingPage: React.FC = () => {
                         Number(e.target.value),
                       ])
                     }
-                    className="w-full"
+                    className="w-full cursor-pointer"
                   />
 
                   <div className="text-sm text-gray-600">
@@ -317,7 +317,7 @@ export const ProductListingPage: React.FC = () => {
 
                 <div
                   onClick={handleResetFilters}
-                  className="text-sm text-blue-600 hover:text-blue-800"
+                  className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer"
                 >
                   Reset
                 </div>
