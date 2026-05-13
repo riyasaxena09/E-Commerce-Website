@@ -1,107 +1,313 @@
 # E-Commerce Website
 
-This repository contains a React + TypeScript e-commerce web application built with Vite. It is a modern storefront that demonstrates a product listing experience with search, filters, cart, wishlist, product details, and responsive UI.
+A modern and responsive e-commerce web application built using React, TypeScript, and Vite. The project demonstrates a complete front-end shopping experience with product browsing, filtering, cart management, wishlist functionality, and responsive UI design.
 
-## Project Overview
+The application uses a Mock API integrated with React Query for efficient data fetching, caching, loading states, and background updates.
 
-The app is a front-end e-commerce website that lets users browse products, apply search and filters, view product detail pages, add items to the cart, and manage a wishlist.
+---
 
-Key features:
-- Product catalog with search, category filtering, price range filtering, sort, and pagination
-- Product detail page with add-to-cart and wishlist actions
-- Shopping cart state managed through React Context
-- Wishlist state managed through React Context
-- Authentication gating for cart/wishlist actions
-- Toast notifications for user feedback
-- Responsive mobile-first layout
+# Project Overview
 
-## How It Works
+This project is a modern Single Page Application (SPA) that allows users to:
 
-The app is structured around React components, context providers, and API services:
+* Browse products from a Mock API
+* Search and filter products
+* View detailed product pages
+* Add and remove products from the cart
+* Manage wishlist items
+* Experience a responsive UI across all devices
 
-- `src/App.tsx` wraps the app with providers and routing, including `QueryClientProvider`, `AuthProvider`, `CartProvider`, `WishlistProvider`, and `Toaster`.
-- `src/routes/AppRoutes.tsx` defines the main routes for home, product listing, product details, cart, and wishlist pages.
-- `src/services/productService.ts` fetches product and category data, primarily used by product listing and detail pages.
-- `src/store/CartContext.tsx` manages cart items, quantities, and total state across the app.
-- `src/store/WishlistContext.tsx` manages wishlist items and state.
-- `src/store/AuthContext.tsx` manages basic authentication status for protected actions.
-- `src/components/common/ProductCard.tsx` renders product cards used in listings and includes add-to-cart / add-to-wishlist actions.
-- Pages like `src/pages/ProductListingPage.tsx`, `src/pages/ProductDetailPage.tsx`, `src/pages/CartPage.tsx`, and `src/pages/WishlistPage.tsx` render full page views.
+The project focuses on reusable components, scalable architecture, and smooth user experience.
 
-The app uses React Query to load, cache, and manage product and category API data. React Query handles data fetching, background updates, loading states, and error states for product lists and detail pages, so the UI can stay responsive and up to date.
+---
 
-## Tech Stack
+# Features
 
-- React 19
-- TypeScript
-- Vite
-- Tailwind CSS
-- React Query (`@tanstack/react-query`)
-- React Router DOM
-- React Hot Toast (`react-hot-toast`)
-- Lucide React icons
-- Context API for cart, wishlist, and auth state
-- CSS modules / page-specific CSS
+## Product Listing
 
-## Folder Structure
+* Product search
+* Category filtering
+* Price range filtering
+* Product sorting
+* Pagination support
 
-- `src/`
-  - `components/` - reusable UI components like `ProductCard`, `ProductGrid`, `Header`, `Footer`, and auth modal
-  - `pages/` - page views such as `HomePage`, `ProductListingPage`, `ProductDetailPage`, `CartPage`, `WishlistPage`
-  - `routes/` - application routing setup
-  - `services/` - API service functions for fetching product and category data
-  - `store/` - React Context providers for authentication, cart, and wishlist
-  - `styles/` - CSS files for pages and major components
-  - `utils/` - utility functions such as price formatting and discount calculations
+## Product Details
 
-## Usage
+* Dynamic product detail pages
+* Add to cart functionality
+* Wishlist support
 
-### Install dependencies
+## Shopping Cart
+
+* Add/remove products
+* Quantity management
+* Cart total calculation
+
+## Wishlist
+
+* Save products for later
+* Move wishlist items to cart
+
+## Authentication Protection
+
+* Cart and wishlist actions are protected
+* Authentication modal shown for unauthenticated users
+
+## Notifications
+
+* Toast notifications for user actions
+
+## Responsive Design
+
+* Mobile-first responsive layout
+* Optimized for desktop, tablet, and mobile devices
+
+---
+
+# Mock API + React Query
+
+This project uses a Mock API to simulate backend product and category data.
+
+React Query (`@tanstack/react-query`) is used for:
+
+* Fetching API data
+* Caching responses
+* Managing loading states
+* Handling error states
+* Background refetching
+* Improving application performance
+
+The API logic is managed inside:
+
+```bash
+src/services/productService.ts
+```
+
+---
+
+# Tech Stack
+
+* React 19
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Router DOM
+* React Query (`@tanstack/react-query`)
+* React Hot Toast
+* Lucide React Icons
+* Context API
+* Custom CSS / CSS Modules
+
+---
+
+# Project Structure
+
+```bash
+src/
+│
+├── components/     # Reusable UI components
+├── pages/          # Application pages
+├── routes/         # Routing configuration
+├── services/       # Mock API service functions
+├── store/          # Context providers
+├── styles/         # CSS and styling files
+├── utils/          # Utility/helper functions
+```
+
+---
+
+# Application Architecture
+
+## `src/App.tsx`
+
+Wraps the application with:
+
+* `QueryClientProvider`
+* `AuthProvider`
+* `CartProvider`
+* `WishlistProvider`
+* `Toaster`
+
+---
+
+## `src/routes/AppRoutes.tsx`
+
+Handles all application routes:
+
+* Home Page
+* Product Listing Page
+* Product Detail Page
+* Cart Page
+* Wishlist Page
+
+---
+
+## `src/services/productService.ts`
+
+Responsible for fetching product and category data from the Mock API.
+
+---
+
+## Context Providers
+
+### `CartContext.tsx`
+
+Handles:
+
+* Cart items
+* Quantity updates
+* Cart totals
+
+### `WishlistContext.tsx`
+
+Manages wishlist functionality and state.
+
+### `AuthContext.tsx`
+
+Handles authentication state for protected actions.
+
+---
+
+## Reusable Components
+
+### `ProductCard.tsx`
+
+Displays:
+
+* Product image
+* Product information
+* Add to cart button
+* Wishlist button
+
+Used across product listing pages.
+
+---
+
+# Installation
+
+## Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Run development server
+---
+
+# Run Development Server
 
 ```bash
 npm run dev
 ```
 
-Then open the local URL shown in the terminal, typically `http://localhost:5173` or `http://localhost:5174`.
+Open the local URL shown in the terminal:
 
-### Build for production
+```bash
+http://localhost:5173
+```
+
+---
+
+# Build for Production
 
 ```bash
 npm run build
 ```
 
-### Preview production build
+---
+
+# Preview Production Build
 
 ```bash
 npm run preview
 ```
 
-## Application Behavior
+---
 
-- **Search and filters:** Users can type a search query, select a category, adjust price range sliders, and sort products.
-- **Pagination:** Product listing pages support pagination with page buttons.
-- **Cart actions:** Users can add products to the cart, and the cart page displays the selected items and totals.
-- **Wishlist actions:** Users can save items to a wishlist and move wishlist items to the cart.
-- **Authentication gating:** Cart and wishlist actions require authentication state; if the user is not authenticated, an auth modal is shown.
-- **Toast notifications:** Feedback messages appear when items are added to cart or moved from wishlist.
+# Application Behavior
 
-## Notes
+## Search & Filters
 
-- The current setup uses a mock or API-backed product service, depending on the service implementation in `src/services/productService.ts`.
-- The UI is built with Tailwind utility classes and page-specific CSS.
-- The project is designed as a client-side SPA using React Router.
+Users can:
 
-## Recommended Improvements
+* Search products
+* Filter by category
+* Filter by price
+* Sort products dynamically
 
-To extend this project further, consider adding:
-- real backend integration for user accounts and order placement
-- cart persistence with local storage
-- a real authentication flow
-- improved error handling and loading states
-- product review and rating features
+---
+
+## Pagination
+
+The product listing page supports pagination for improved user experience.
+
+---
+
+## Cart Functionality
+
+Users can:
+
+* Add products to cart
+* Update quantities
+* Remove products
+* View total pricing
+
+---
+
+## Wishlist Functionality
+
+Users can:
+
+* Save products to wishlist
+* Remove wishlist items
+* Move products to cart
+
+---
+
+## Authentication Protection
+
+Unauthenticated users are prompted with an authentication modal before performing protected actions.
+
+---
+
+## Toast Notifications
+
+Toast messages provide feedback for actions like:
+
+* Adding to cart
+* Removing items
+* Wishlist updates
+
+---
+
+# Responsive Design
+
+The project is fully responsive and optimized for:
+
+* Desktop
+* Tablet
+* Mobile devices
+* Small screen phones
+
+The UI follows a mobile-first design approach using Tailwind CSS and custom responsive styling.
+
+---
+
+# Future Improvements
+
+Potential future enhancements:
+
+* Real backend integration
+* Secure authentication system
+* Checkout and payment gateway
+* Order management
+* Product reviews and ratings
+* Cart persistence using local storage
+* Better loading skeletons
+* Improved error handling
+* Admin dashboard
+
+---
+
+# Conclusion
+
+This project demonstrates a scalable and modern e-commerce frontend architecture using React, TypeScript, React Query, and Context API. It focuses on reusable components, responsive UI, clean state manageme
